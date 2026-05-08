@@ -7,7 +7,7 @@ const LogTerminal = ({ logs }: { logs: string[] }) => {
       <div className="px-6 py-4 border-b border-dark-border bg-dark-lighter/80 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <TerminalIcon size={18} className="text-gray-400" />
-          <h3 className="font-bold">Deployment Logs</h3>
+          <h3 className="font-bold">madhu Logs</h3>
         </div>
         <div className="flex gap-3">
           <button className="text-gray-400 hover:text-white transition-colors">
