@@ -21,7 +21,7 @@ const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
         <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-devops-indigo/10 rounded-full blur-[120px]" />
       </div>
 
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         className="w-full max-w-md glass-card p-8 relative z-10"
@@ -30,7 +30,7 @@ const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
           <div className="w-16 h-16 bg-devops-blue rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-devops-blue/20">
             <ShieldCheck className="text-white w-8 h-8" />
           </div>
-          <h1 className="text-3xl font-bold tracking-tight">Welcome Back</h1>
+          <h1 className="text-3xl font-bold tracking-tight">madhu Back</h1>
           <p className="text-gray-400 mt-2">Sign in to your DevOps Control Plane</p>
         </div>
 
@@ -39,8 +39,8 @@ const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
             <label className="text-sm font-medium text-gray-300">Email Address</label>
             <div className="relative">
               <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
-              <input 
-                type="email" 
+              <input
+                type="email"
                 defaultValue="admin@devops.com"
                 className="w-full bg-dark border border-dark-border rounded-xl py-3 pl-10 pr-4 focus:border-devops-blue outline-none transition-all"
                 placeholder="Enter your email"
@@ -55,8 +55,8 @@ const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
             </div>
             <div className="relative">
               <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
-              <input 
-                type="password" 
+              <input
+                type="password"
                 defaultValue="••••••••"
                 className="w-full bg-dark border border-dark-border rounded-xl py-3 pl-10 pr-4 focus:border-devops-blue outline-none transition-all"
                 placeholder="Enter your password"
@@ -64,7 +64,7 @@ const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
             </div>
           </div>
 
-          <button 
+          <button
             type="submit"
             disabled={loading}
             className="w-full bg-devops-blue hover:bg-blue-600 text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition-all group disabled:opacity-70"
