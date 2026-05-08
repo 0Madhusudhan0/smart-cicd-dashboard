@@ -68,12 +68,12 @@ const MonitoringCharts = ({ data }: MetricsProps) => {
   };
 
   const cpuData = {
-    labels: data.labels,
+    labels: data?.labels || [],
     datasets: [
       {
         fill: true,
         label: 'CPU Usage %',
-        data: data.cpu,
+        data: data?.cpu || [],
         borderColor: '#3B82F6',
         backgroundColor: 'rgba(59, 130, 246, 0.1)',
         borderWidth: 2,
@@ -82,12 +82,12 @@ const MonitoringCharts = ({ data }: MetricsProps) => {
   };
 
   const ramData = {
-    labels: data.labels,
+    labels: data?.labels || [],
     datasets: [
       {
         fill: true,
         label: 'RAM Usage %',
-        data: data.ram,
+        data: data?.ram || [],
         borderColor: '#06B6D4',
         backgroundColor: 'rgba(6, 182, 212, 0.1)',
         borderWidth: 2,
@@ -100,7 +100,7 @@ const MonitoringCharts = ({ data }: MetricsProps) => {
       <div className="glass-card p-6">
         <div className="flex items-center justify-between mb-6">
           <h3 className="font-bold text-lg">CPU Utilization</h3>
-          <span className="text-devops-blue font-mono text-sm">{data.cpu[data.cpu.length - 1]}%</span>
+          <span className="text-devops-blue font-mono text-sm">{data?.cpu?.[data.cpu.length - 1] || 0}%</span>
         </div>
         <div className="h-[200px]">
           <Line options={chartOptions} data={cpuData} />
@@ -110,7 +110,7 @@ const MonitoringCharts = ({ data }: MetricsProps) => {
       <div className="glass-card p-6">
         <div className="flex items-center justify-between mb-6">
           <h3 className="font-bold text-lg">RAM Utilization</h3>
-          <span className="text-devops-cyan font-mono text-sm">{data.ram[data.ram.length - 1]}%</span>
+          <span className="text-devops-cyan font-mono text-sm">{data?.ram?.[data.ram.length - 1] || 0}%</span>
         </div>
         <div className="h-[200px]">
           <Line options={chartOptions} data={ramData} />

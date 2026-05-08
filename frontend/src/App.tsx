@@ -148,27 +148,27 @@ function App() {
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
           <StatCard 
             label="Active Pipelines" 
-            value={stats.activePipelines} 
+            value={stats?.activePipelines || 0} 
             icon={GitBranch} 
             color="blue"
             trend="+2 today"
           />
           <StatCard 
             label="Successful Builds" 
-            value={stats.successfulBuilds} 
+            value={stats?.successfulBuilds || 0} 
             icon={CheckCircle} 
             color="emerald"
             trend="+48.2%"
           />
           <StatCard 
             label="Failed Builds" 
-            value={stats.failedBuilds} 
+            value={stats?.failedBuilds || 0} 
             icon={AlertCircle} 
             color="red"
           />
           <StatCard 
             label="System Uptime" 
-            value={stats.uptime} 
+            value={stats?.uptime || 'N/A'} 
             icon={Activity} 
             color="cyan"
           />
@@ -190,7 +190,7 @@ function App() {
                 </button>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {pipelines.map((p: any) => (
+                {(pipelines || []).map((p: any) => (
                   <PipelineCard key={p.id} pipeline={p} />
                 ))}
               </div>

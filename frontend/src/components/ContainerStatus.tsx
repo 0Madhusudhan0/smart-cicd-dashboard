@@ -19,7 +19,7 @@ const ContainerStatus = ({ containers }: { containers: Container[] }) => {
         </button>
       </div>
       <div className="p-2">
-        {containers.map((container, i) => (
+        {(containers || []).map((container, i) => (
           <div key={i} className="flex items-center justify-between p-4 hover:bg-dark-border/30 rounded-lg transition-all group">
             <div className="flex items-center gap-4">
               <div className="w-10 h-10 rounded-lg bg-dark-border flex items-center justify-center group-hover:bg-devops-blue/20 transition-colors">

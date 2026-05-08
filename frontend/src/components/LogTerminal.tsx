@@ -19,7 +19,8 @@ const LogTerminal = ({ logs }: { logs: string[] }) => {
         </div>
       </div>
       <div className="flex-1 p-6 font-mono text-sm overflow-y-auto bg-black/40 space-y-1">
-        {logs.map((log, i) => {
+        {(logs || []).map((logItem: any, i: number) => {
+          const log = typeof logItem === 'string' ? logItem : (logItem.message || JSON.stringify(logItem));
           let textColor = 'text-gray-300';
           if (log.includes('[SUCCESS]')) textColor = 'text-emerald-400';
           if (log.includes('[ERROR]')) textColor = 'text-red-400';

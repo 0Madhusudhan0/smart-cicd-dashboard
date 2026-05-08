@@ -26,23 +26,27 @@ const BuildHistory = ({ builds }: { builds: Build[] }) => {
             </tr>
           </thead>
           <tbody className="divide-y divide-dark-border">
-            {builds.map((build) => (
-              <tr key={build.id} className="hover:bg-dark-border/30 transition-colors">
-                <td className="px-6 py-4 font-mono text-devops-blue text-sm">{build.id}</td>
-                <td className="px-6 py-4 font-medium">{build.service}</td>
-                <td className="px-6 py-4">
-                  <span className={`px-2 py-1 rounded-full text-xs font-bold ${
-                    build.result === 'success' 
-                      ? 'bg-emerald-400/10 text-emerald-400' 
-                      : 'bg-red-400/10 text-red-400'
-                  }`}>
-                    {build.result.toUpperCase()}
-                  </span>
-                </td>
-                <td className="px-6 py-4 text-sm text-gray-400">{build.time}</td>
-                <td className="px-6 py-4 text-sm text-gray-400">{build.duration}</td>
-              </tr>
-            ))}
+            {(builds || []).map((build: any) => {
+              const status = build.status || build.result || '';
+              const isSuccess = status.toLowerCase() === 'success';
+              return (
+                <tr key={build.id} className="hover:bg-dark-border/30 transition-colors">
+                  <td className="px-6 py-4 font-mono text-devops-blue text-sm">{build.id}</td>
+                  <td className="px-6 py-4 font-medium">{build.service || build.pipeline || build.name || 'Unknown'}</td>
+                  <td className="px-6 py-4">
+                    <span className={`px-2 py-1 rounded-full text-xs font-bold ${
+                      isSuccess 
+                        ? 'bg-emerald-400/10 text-emerald-400' 
+                        : 'bg-red-400/10 text-red-400'
+                    }`}>
+                      {status.toUpperCase()}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-400">{build.time}</td>
+                  <td className="px-6 py-4 text-sm text-gray-400">{build.duration}</td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
