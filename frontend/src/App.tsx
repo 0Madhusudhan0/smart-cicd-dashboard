@@ -21,15 +21,57 @@ import LoginPage from './components/LoginPage';
 
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
+const MOCK_STATS = {
+  activePipelines: 12,
+  successfulBuilds: 145,
+  failedBuilds: 3,
+  uptime: '99.9%'
+};
+
+const MOCK_PIPELINES = [
+  { id: '1', name: 'api-gateway', status: 'running', branch: 'main', commit: 'a1b2c3d', duration: '2m 30s' },
+  { id: '2', name: 'auth-service', status: 'success', branch: 'develop', commit: 'f9e8d7c', duration: '1m 45s' },
+  { id: '3', name: 'web-frontend', status: 'failed', branch: 'feature/new-ui', commit: '4b5n6m7', duration: '5m 12s' },
+  { id: '4', name: 'payment-processor', status: 'queued', branch: 'main', commit: 'z1x2c3v', duration: '-' }
+];
+
+const MOCK_BUILDS = [
+  { id: '101', pipeline: 'api-gateway', status: 'success', duration: '2m 14s', time: '10 mins ago' },
+  { id: '102', name: 'web-frontend', pipeline: 'web-frontend', status: 'failed', duration: '45s', time: '1 hour ago' },
+  { id: '103', name: 'auth-service', pipeline: 'auth-service', status: 'success', duration: '1m 50s', time: '3 hours ago' },
+  { id: '104', name: 'database-migration', pipeline: 'database-migration', status: 'success', duration: '5m 20s', time: '5 hours ago' }
+];
+
+const MOCK_LOGS = [
+  { id: 1, timestamp: '10:24:01', message: 'Starting build for api-gateway', type: 'info' },
+  { id: 2, timestamp: '10:24:15', message: 'Installing dependencies...', type: 'info' },
+  { id: 3, timestamp: '10:25:02', message: 'Running unit tests', type: 'info' },
+  { id: 4, timestamp: '10:25:30', message: 'Warning: Deprecated package detected', type: 'warning' },
+  { id: 5, timestamp: '10:26:10', message: 'Build successful. Pushing to registry.', type: 'success' },
+  { id: 6, timestamp: '11:05:00', message: 'Error: Cannot connect to database', type: 'error' }
+];
+
+const MOCK_CONTAINERS = [
+  { id: 'c1', name: 'nginx-proxy', status: 'running', cpu: '2.4%', memory: '128MB' },
+  { id: 'c2', name: 'redis-cache', status: 'running', cpu: '0.5%', memory: '64MB' },
+  { id: 'c3', name: 'postgres-db', status: 'running', cpu: '5.8%', memory: '512MB' },
+  { id: 'c4', name: 'worker-node', status: 'stopped', cpu: '0%', memory: '0MB' }
+];
+
+const MOCK_METRICS = {
+  cpu: [45, 52, 48, 61, 59, 65, 50],
+  memory: [60, 62, 65, 64, 68, 70, 65],
+  labels: ['10:00', '10:10', '10:20', '10:30', '10:40', '10:50', '11:00']
+};
+
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [stats, setStats] = useState<any>(null);
-  const [pipelines, setPipelines] = useState([]);
-  const [builds, setBuilds] = useState([]);
-  const [logs, setLogs] = useState([]);
-  const [containers, setContainers] = useState([]);
-  const [metrics, setMetrics] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+  const [stats, setStats] = useState<any>(MOCK_STATS);
+  const [pipelines, setPipelines] = useState<any[]>(MOCK_PIPELINES);
+  const [builds, setBuilds] = useState<any[]>(MOCK_BUILDS);
+  const [logs, setLogs] = useState<any[]>(MOCK_LOGS);
+  const [containers, setContainers] = useState<any[]>(MOCK_CONTAINERS);
+  const [metrics, setMetrics] = useState<any>(MOCK_METRICS);
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -49,29 +91,20 @@ function App() {
         axios.get(`${API_BASE}/containers`),
         axios.get(`${API_BASE}/metrics`),
       ]);
+
       setStats(s.data);
       setPipelines(p.data);
       setBuilds(b.data);
       setLogs(l.data);
       setContainers(c.data);
       setMetrics(m.data);
-      setLoading(false);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('Error fetching data (keeping current data):', error);
     }
   };
 
   if (!isLoggedIn) {
     return <LoginPage onLogin={() => setIsLoggedIn(true)} />;
-  }
-
-  if (loading || !stats || !metrics) {
-    return (
-      <div className="h-screen bg-dark flex flex-col items-center justify-center gap-4">
-        <div className="w-12 h-12 border-4 border-devops-blue border-t-transparent rounded-full animate-spin" />
-        <p className="text-gray-400 font-medium animate-pulse">Initializing DevOps Dashboard...</p>
-      </div>
-    );
   }
 
   return (
